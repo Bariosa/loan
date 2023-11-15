@@ -6,14 +6,15 @@ export default class MiniSlider extends Slider {
   }
 
   decorizeSlides() {
-    this.slides.forEach((slide) => {
-      slide.classList.remove(this.activeClass);
+    for (let i = 0; i < this.slides.length; i++) {
+      this.slides[i].classList.remove(this.activeClass);
       if (this.animate) {
-        this.slides[0].querySelector(".card__title").style.opacity = "0.4";
-        this.slides[0].querySelector(".card__controls-arrow").style.opacity =
+        this.slides[i].querySelector(".card__title").style.opacity = "0.4";
+        this.slides[i].querySelector(".card__controls-arrow").style.opacity =
           "0";
       }
-    });
+    }
+
     if (!this.slides[0].closest("button")) {
       this.slides[0].classList.add(this.activeClass);
     }
@@ -60,10 +61,10 @@ export default class MiniSlider extends Slider {
 
   init() {
     this.container.style.cssText = `
-    display: flex;
-    flex-wrap: wrap;
-    overflow: hidden;
-    align-items: flex-start;
+      display: flex;
+      flex-wrap: wrap;
+      overflow: hidden;
+      align-items: flex-start;
     `;
 
     this.bindTriggers();

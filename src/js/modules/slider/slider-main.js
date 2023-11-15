@@ -29,9 +29,9 @@ export default class MainSlider extends Slider {
       console.log(error);
     }
 
-    this.slides.forEach((slide) => {
-      slide.style.display = "none";
-    });
+    for (let i = 0; i < this.slides.length; i++) {
+      this.slides[i].style.display = "none";
+    }
 
     this.slides[this.slideIndex - 1].style.display = "block";
   }

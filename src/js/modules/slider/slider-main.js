@@ -14,19 +14,17 @@ export default class MainSlider extends Slider {
       this.slideIndex = this.slides.length;
     }
 
-    if (n === 3) {
-      this.hanson.classList.add("animated");
-      setTimeout(() => {
-        this.hanson.style.opacity = "1";
-        this.hanson.classList.add("slideInUp");
-      }, 3000);
-    } else {
-      this.hanson.classList.remove("slideInUp");
-    }
-    try {
+    if (this.hanson) {
+      if (n === 3) {
+        this.hanson.classList.add("animated");
+        setTimeout(() => {
+          this.hanson.style.opacity = "1";
+          this.hanson.classList.add("slideInUp");
+        }, 3000);
+      } else {
+        this.hanson.classList.remove("slideInUp");
+      }
       this.hanson.style.opacity = "0";
-    } catch (error) {
-      console.log(error);
     }
 
     for (let i = 0; i < this.slides.length; i++) {
@@ -40,13 +38,7 @@ export default class MainSlider extends Slider {
     this.showSlides((this.slideIndex += n));
   }
 
-  render() {
-    try {
-      this.hanson = document.querySelector(".hanson");
-    } catch (error) {
-      console.log(error);
-    }
-
+  bindTriggers() {
     this.btns.forEach((item) => {
       item.addEventListener("click", () => {
         this.plusSlides(1);
@@ -59,6 +51,33 @@ export default class MainSlider extends Slider {
       });
     });
 
-    this.showSlides(this.slideIndex);
+    document.querySelectorAll(".prevmodule").forEach((item) => {
+      item.addEventListener("click", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        this.plusSlides(-1);
+      });
+    });
+
+    document.querySelectorAll(".nextmodule").forEach((item) => {
+      item.addEventListener("click", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        this.plusSlides(1);
+      });
+    });
+  }
+
+  render() {
+    if (this.container) {
+      try {
+        this.hanson = document.querySelector(".hanson");
+      } catch (error) {
+        console.log(error);
+      }
+
+      this.showSlides(this.slideIndex);
+      this.bindTriggers();
+    }
   }
 }
